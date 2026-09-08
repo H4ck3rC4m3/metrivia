@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Metrodle, un joc web de coneixement sobre xarxes de metro."
+    />
+    <title>Metrodle</title>
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('metrodle:theme:v1')
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.theme =
+          savedTheme === 'light' || savedTheme === 'dark'
+            ? savedTheme
+            : prefersDark
+              ? 'dark'
+              : 'light'
+      } catch {
+        document.documentElement.dataset.theme = 'light'
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

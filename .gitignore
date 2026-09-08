@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.vite/
+.svelte-kit/
+
+# Test and coverage output
+coverage/
+playwright-report/
+test-results/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local tool caches
+.eslintcache
+.stylelintcache
+.tsbuildinfo
+*.tsbuildinfo
+
+# Editor and IDE files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Optional local deployment artifacts
+.vercel/
+.netlify/
