@@ -5,6 +5,7 @@
   import type { GameStatus, OrderStopsRound } from '../../types/game'
   import GameResult from '../../components/GameResult.svelte'
   import MetroLineBadge from '../../components/MetroLineBadge.svelte'
+  import CityName from '../../components/CityName.svelte'
   import StopTile from '../../components/StopTile.svelte'
   import type { GameStats } from '../../types/game'
   import { isCorrectOrder } from './logic'
@@ -96,7 +97,7 @@
   <div class="play-layout">
     <aside class="play-context">
       <div class="game-meta">
-        <span>{$t(city.nameKey)}</span>
+        <CityName {city} />
         <MetroLineBadge {line} />
       </div>
       <p class="kicker">{$t('orderStops.kicker')}</p>

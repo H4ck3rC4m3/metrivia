@@ -5,6 +5,7 @@
   import { t, type TranslationKey } from '../i18n'
   import DifficultySelector from './DifficultySelector.svelte'
   import LineSelector from './LineSelector.svelte'
+  import CityName from './CityName.svelte'
 
   export let city: City
   export let mode: GameMode
@@ -40,7 +41,7 @@
       <dl>
         <div>
           <dt>{$t('setup.city')}</dt>
-          <dd>{$t(city.nameKey)}</dd>
+          <dd><CityName {city} /></dd>
         </div>
         <div>
           <dt>{$t('setup.mode')}</dt>

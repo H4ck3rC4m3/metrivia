@@ -53,6 +53,7 @@ tmp/
 temp/
 *.tmp
 *.temp
+scripts/
 
 # Package manager caches
 .npm/

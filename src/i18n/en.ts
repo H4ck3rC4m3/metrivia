@@ -11,7 +11,7 @@ export const en = {
   'common.switchToLight': 'Switch to light mode',
   'common.switchToDark': 'Switch to dark mode',
   'common.homeAria': 'Return to home',
-  'common.linesDemo': '{count} demo lines',
+  'common.linesDemo': '{count} demo',
   'common.stops': { one: '{count} station', other: '{count} stations' },
   'cities.barcelona': 'Barcelona',
   'cities.moscow': 'Moscow',

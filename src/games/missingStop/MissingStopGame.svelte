@@ -5,6 +5,7 @@
   import type { City } from '../../types/metro'
   import GameResult from '../../components/GameResult.svelte'
   import MetroLineBadge from '../../components/MetroLineBadge.svelte'
+  import CityName from '../../components/CityName.svelte'
   import { isMissingStopAnswer } from './logic'
 
   export let city: City
@@ -41,7 +42,7 @@
   <div class="missing-layout">
     <header class="missing-header">
       <div class="game-meta">
-        <span>{$t(city.nameKey)}</span>
+        <CityName {city} />
         <MetroLineBadge {line} />
       </div>
       <p class="kicker">{$t('missingStop.kicker')}</p>

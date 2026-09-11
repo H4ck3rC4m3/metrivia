@@ -5,6 +5,7 @@
   import type { City } from '../../types/metro'
   import GameResult from '../../components/GameResult.svelte'
   import MetroLineBadge from '../../components/MetroLineBadge.svelte'
+  import CityName from '../../components/CityName.svelte'
   import { isWrongStopAnswer } from './logic'
 
   export let city: City
@@ -41,7 +42,7 @@
   <div class="intruder-layout">
     <aside class="intruder-copy">
       <div class="game-meta">
-        <span>{$t(city.nameKey)}</span>
+        <CityName {city} />
         <MetroLineBadge {line} />
       </div>
       <p class="kicker">{$t('wrongStop.kicker')}</p>

@@ -11,7 +11,7 @@ export const es = {
   'common.switchToLight': 'Cambiar a modo claro',
   'common.switchToDark': 'Cambiar a modo oscuro',
   'common.homeAria': 'Volver al inicio',
-  'common.linesDemo': '{count} líneas demo',
+  'common.linesDemo': '{count} líneas',
   'common.stops': { one: '{count} estación', other: '{count} estaciones' },
   'cities.barcelona': 'Barcelona',
   'cities.moscow': 'Moscú',

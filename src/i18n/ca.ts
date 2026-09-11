@@ -9,7 +9,7 @@ export const ca = {
   'common.switchToLight': 'Canvia a mode clar',
   'common.switchToDark': 'Canvia a mode fosc',
   'common.homeAria': "Tornar a l'inici",
-  'common.linesDemo': '{count} línies demo',
+  'common.linesDemo': '{count} línies',
   'common.stops': { one: '{count} estació', other: '{count} estacions' },
   'cities.barcelona': 'Barcelona',
   'cities.moscow': 'Moscou',

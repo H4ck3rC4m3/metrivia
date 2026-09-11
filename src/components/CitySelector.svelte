@@ -2,11 +2,13 @@
   import type { City } from '../types/metro'
   import { t } from '../i18n'
   import StatsStrip from './StatsStrip.svelte'
+  import CityName from './CityName.svelte'
   import type { GameStats } from '../types/game'
 
   export let cities: City[]
   export let stats: GameStats
   export let onSelect: (cityId: string) => void
+
 </script>
 
 <section class="screen hero-screen" aria-labelledby="city-title">
@@ -30,10 +32,9 @@
 
   <nav class="city-board" aria-label={$t('home.chooseCity')}>
     <p>{$t('home.chooseCity')}</p>
-    {#each cities as city, index}
+    {#each cities as city}
       <button class="city-route" type="button" onclick={() => onSelect(city.id)}>
-        <span class="city-index">{String(index + 1).padStart(2, '0')}</span>
-        <span class="city-name">{$t(city.nameKey)}</span>
+        <CityName {city} />
         <span class="city-lines">{$t('common.linesDemo', { count: city.lines.length })}</span>
         <span class="city-track" aria-hidden="true">
           <span class="track-line"></span>

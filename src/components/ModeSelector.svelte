@@ -2,6 +2,7 @@
   import type { GameMode } from '../types/game'
   import type { City } from '../types/metro'
   import { t } from '../i18n'
+  import CityName from './CityName.svelte'
 
   const gameModes = [
     {
@@ -30,7 +31,7 @@
   <button class="text-button" type="button" onclick={onBack}>← {$t('common.back')}</button>
   <div class="mode-layout">
     <div class="mode-heading">
-      <p class="kicker">{$t(city.nameKey)}</p>
+      <p class="kicker"><CityName {city} /></p>
       <h1 id="mode-title">{$t('mode.title')}</h1>
     </div>
 
