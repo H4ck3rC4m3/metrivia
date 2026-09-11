@@ -39,8 +39,14 @@ export function createOrderStopsRound(
 }
 
 export function isCorrectOrder(currentStopIds: readonly string[], correctStopIds: readonly string[]): boolean {
-  return (
-    currentStopIds.length === correctStopIds.length &&
-    currentStopIds.every((stopId, index) => stopId === correctStopIds[index])
+  if (currentStopIds.length !== correctStopIds.length) {
+    return false
+  }
+
+  const direct = currentStopIds.every((stopId, index) => stopId === correctStopIds[index])
+  const reverse = currentStopIds.every(
+    (stopId, index) => stopId === correctStopIds[correctStopIds.length - 1 - index]
   )
+
+  return direct || reverse
 }

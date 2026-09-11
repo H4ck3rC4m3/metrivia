@@ -61,7 +61,7 @@ export const en = {
   'orderStops.reorderableAria': 'Reorderable stations',
   'orderStops.tileAria': '{station}, position {position} of {total}',
   'orderStops.moved': '{station} moved to position {position} of {total}.',
-  'orderStops.solution': 'Correct order: {stations}',
+  'orderStops.solution': 'One valid order: {stations}',
   'missingStop.kicker': '02 / Gap',
   'missingStop.prompt': 'Which station is missing?',
   'missingStop.title': 'One station is missing.',

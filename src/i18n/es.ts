@@ -61,7 +61,7 @@ export const es = {
   'orderStops.reorderableAria': 'Estaciones reordenables',
   'orderStops.tileAria': '{station}, posición {position} de {total}',
   'orderStops.moved': '{station} movida a la posición {position} de {total}.',
-  'orderStops.solution': 'Orden correcto: {stations}',
+  'orderStops.solution': 'Un orden válido: {stations}',
   'missingStop.kicker': '02 / Hueco',
   'missingStop.prompt': '¿Qué estación falta?',
   'missingStop.title': 'Falta una estación.',

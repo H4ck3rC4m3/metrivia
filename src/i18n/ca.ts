@@ -59,7 +59,7 @@ export const ca = {
   'orderStops.reorderableAria': 'Estacions reordenables',
   'orderStops.tileAria': '{station}, posició {position} de {total}',
   'orderStops.moved': '{station} moguda a la posició {position} de {total}.',
-  'orderStops.solution': 'Ordre correcte: {stations}',
+  'orderStops.solution': 'Un ordre vàlid: {stations}',
   'missingStop.kicker': '02 / Buit',
   'missingStop.prompt': 'Quina estació falta?',
   'missingStop.title': 'Hi ha una estació absent.',

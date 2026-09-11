@@ -1008,7 +1008,7 @@ h2 {
 .stop-list {
   display: grid;
   gap: 0;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .route-list {
@@ -1041,9 +1041,9 @@ h2 {
   background: transparent;
   color: var(--text);
   text-align: left;
-  cursor: grab;
+  cursor: default;
   user-select: none;
-  touch-action: none;
+  touch-action: pan-y;
   transition:
     transform var(--duration-fast) var(--ease-standard),
     box-shadow var(--duration-fast) var(--ease-standard),
@@ -1082,6 +1082,10 @@ h2 {
   transform: scale(1.015);
 }
 
+.stop-tile.dragging .handle {
+  cursor: grabbing;
+}
+
 .stop-tile.dragging::before {
   background: var(--active-line, var(--accent));
   transform: scale(1.16);
@@ -1089,9 +1093,13 @@ h2 {
 
 .handle {
   display: grid;
-  width: 18px;
-  height: 18px;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
   place-items: center;
+  border-radius: 999px;
+  cursor: grab;
+  touch-action: none;
 }
 
 .handle::before {

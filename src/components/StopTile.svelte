@@ -16,7 +16,6 @@
   class:dragging
   type="button"
   disabled={disabled}
-  onpointerdown={(event) => onPointerDown(event, index)}
   onkeydown={(event) => {
     if (disabled) return
     if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
@@ -30,6 +29,6 @@
   }}
   aria-label={$t('orderStops.tileAria', { station: station.name, position: index + 1, total })}
 >
-  <span class="handle" aria-hidden="true"></span>
+  <span class="handle" aria-hidden="true" onpointerdown={(event) => onPointerDown(event, index)}></span>
   <span>{station.name}</span>
 </button>
