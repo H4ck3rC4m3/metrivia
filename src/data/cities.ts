@@ -1,11 +1,13 @@
 import { barcelona } from './barcelona'
+import { malaga } from './malaga'
 import { moscow } from './moscow'
+import { seville } from './seville'
 import type { City, MetroLine, MetroRoute, ResolvedRoute, Station } from '../types/metro'
 import type { Difficulty, GameMode } from '../types/game'
 import { randomItem } from '../lib/random'
 import { resolveStopCount } from '../games/shared/difficulty'
 
-export const cities: City[] = [barcelona, moscow]
+export const cities: City[] = [barcelona, malaga, seville]
 
 export function getCity(cityId: string): City {
   const city = cities.find((candidate) => candidate.id === cityId)
