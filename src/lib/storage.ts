@@ -1,9 +1,9 @@
 import type { GameStats, Preferences, ThemeMode } from '../types/game'
 import { normalizeLocale } from '../i18n/locales'
 
-const preferencesKey = 'metrodle:preferences:v1'
-const statsKey = 'metrodle:stats:v1'
-const themeKey = 'metrodle:theme:v1'
+const preferencesKey = 'metrivia:preferences:v1'
+const statsKey = 'metrivia:stats:v1'
+const themeKey = 'metrivia:theme:v1'
 
 const defaultPreferences: Preferences = {
   cityId: 'barcelona',

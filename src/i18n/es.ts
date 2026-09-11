@@ -1,9 +1,9 @@
 import type { BaseTranslations } from './ca'
 
 export const es = {
-  'app.name': 'Metrodle',
-  'app.metaTitle': 'Metrodle — Juego de metro',
-  'app.metaDescription': 'Metrodle, un juego web de conocimiento sobre redes de metro.',
+  'app.name': 'Metrivia',
+  'app.metaTitle': 'Metrivia — Juego de metro',
+  'app.metaDescription': 'Metrivia, un juego web de conocimiento sobre redes de metro.',
   'common.back': 'Atrás',
   'common.start': 'Empezar',
   'common.check': 'Comprobar',

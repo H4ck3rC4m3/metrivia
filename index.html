@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Metrodle, un joc web de coneixement sobre xarxes de metro."
+      content="Metrivia, un joc web de coneixement sobre xarxes de metro."
     />
-    <title>Metrodle</title>
+    <title>Metrivia</title>
     <script>
       try {
         const supportedLocales = ['ca', 'en', 'es']
@@ -19,14 +19,14 @@
           return supportedLocales.includes(base) ? base : null
         }
         const params = new URLSearchParams(window.location.search)
-        const savedLocale = localStorage.getItem('metrodle:locale:v1')
+        const savedLocale = localStorage.getItem('metrivia:locale:v1')
         const browserLocale = navigator.languages?.[0] || navigator.language
         const locale =
           normalizeLocale(params.get('lang')) ||
           normalizeLocale(savedLocale) ||
           normalizeLocale(browserLocale) ||
           'ca'
-        const savedTheme = localStorage.getItem('metrodle:theme:v1')
+        const savedTheme = localStorage.getItem('metrivia:theme:v1')
         const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches
         document.documentElement.lang = locale
         document.documentElement.dir = 'ltr'

@@ -11,8 +11,8 @@ import {
 } from './locales'
 import type { TranslationDictionary, TranslationParams, TranslationValue } from './types'
 
-const localeStorageKey = 'metrodle:locale:v1'
-const preferencesStorageKey = 'metrodle:preferences:v1'
+const localeStorageKey = 'metrivia:locale:v1'
+const preferencesStorageKey = 'metrivia:preferences:v1'
 
 const dictionaries = {
   ca,

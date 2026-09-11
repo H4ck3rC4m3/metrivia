@@ -1,9 +1,9 @@
 import type { BaseTranslations } from './ca'
 
 export const en = {
-  'app.name': 'Metrodle',
-  'app.metaTitle': 'Metrodle — Metro game',
-  'app.metaDescription': 'Metrodle, a web game about metro networks.',
+  'app.name': 'Metrivia',
+  'app.metaTitle': 'Metrivia — Metro game',
+  'app.metaDescription': 'Metrivia, a web game about metro networks.',
   'common.back': 'Back',
   'common.start': 'Start',
   'common.check': 'Check',

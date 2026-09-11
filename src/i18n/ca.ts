@@ -1,7 +1,7 @@
 export const ca = {
-  'app.name': 'Metrodle',
-  'app.metaTitle': 'Metrodle — Joc de metro',
-  'app.metaDescription': 'Metrodle, un joc web de coneixement sobre xarxes de metro.',
+  'app.name': 'Metrivia',
+  'app.metaTitle': 'Metrivia — Joc de metro',
+  'app.metaDescription': 'Metrivia, un joc web de coneixement sobre xarxes de metro.',
   'common.back': 'Enrere',
   'common.start': 'Començar',
   'common.check': 'Comprovar',

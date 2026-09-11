@@ -1,5 +1,5 @@
-# Metrodle
-Benvingut a Metrodle, el joc web on posaràs a prova els teus coneixements sobre les xarxes de metro del món. Tria la teva ciutat preferida, selecciona la teva modalitat i el nivell de dificultat, i comença a jugar.
+# Metrivia
+Benvingut a Metrivia, el joc web on posaràs a prova els teus coneixements sobre les xarxes de metro del món. Tria la teva ciutat preferida, selecciona la teva modalitat i el nivell de dificultat, i comença a jugar.
 
 ## Tecnologies
 - Svelte
@@ -30,7 +30,7 @@ npm run check
 ```
 
 ## Desplegament
-El projecte està configurat com a GitHub Project Page amb `base: '/metrodle/'`.
+El projecte està configurat com a GitHub Project Page amb `base: '/metrivia/'`.
 
 Els pushes a `main` executen `.github/workflows/deploy.yml`, que instal·la dependències, passa les comprovacions, genera `dist/` i desplega amb les accions oficials de GitHub Pages.
 
@@ -39,7 +39,7 @@ Al repositori de GitHub pot ser necessari activar:
 `Settings -> Pages -> Source -> GitHub Actions`
 
 ## Internacionalització (i18n)
-Metrodle utilitza una capa i18n interna i petita a `src/i18n/`, sense dependències externes.
+Metrivia utilitza una capa i18n interna i petita a `src/i18n/`, sense dependències externes.
 
 Idiomes actuals:
 - `ca` — Català
