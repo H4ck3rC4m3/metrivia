@@ -9,6 +9,7 @@
   import OrderStopsGame from './games/orderStops/OrderStopsGame.svelte'
   import { createRound } from './games/shared/createRound'
   import WrongStopGame from './games/wrongStop/WrongStopGame.svelte'
+  import { initializeLocale, t } from './i18n'
   import {
     loadPreferences,
     loadStats,
@@ -33,7 +34,7 @@
   let screen: Screen = 'city'
   let preferences: Preferences = {
     cityId: 'barcelona',
-    difficulty: 'normal',
+    difficulty: 'expert',
     lineSelection: 'random'
   }
   let selectedMode: GameMode = 'order-stops'
@@ -52,6 +53,7 @@
 
   onMount(() => {
     validateAllCities()
+    initializeLocale()
     preferences = loadPreferences()
     stats = loadStats()
     theme = loadTheme()
@@ -108,8 +110,8 @@
       const lineId = preferences.lineSelection === 'manual' ? selectedLineId : undefined
       round = createRound(selectedCity, selectedMode, preferences.difficulty, lineId, round?.id)
       screen = 'game'
-    } catch (error) {
-      generationError = error instanceof Error ? error.message : 'No s’ha pogut generar la ronda.'
+    } catch {
+      generationError = $t('errors.roundGeneration')
     }
   }
 

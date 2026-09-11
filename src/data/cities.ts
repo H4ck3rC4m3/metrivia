@@ -18,7 +18,7 @@ export function getCity(cityId: string): City {
 export function getStation(city: City, stationId: string): Station {
   const station = city.stations.find((candidate) => candidate.id === stationId)
   if (!station) {
-    throw new Error(`Unknown station "${stationId}" in ${city.name}.`)
+    throw new Error(`Unknown station "${stationId}" in ${city.id}.`)
   }
   return station
 }
@@ -40,13 +40,17 @@ export function getStationLines(city: City, stationId: string): MetroLine[] {
 export function getLine(city: City, lineId: string): MetroLine {
   const line = city.lines.find((candidate) => candidate.id === lineId)
   if (!line) {
-    throw new Error(`Unknown line "${lineId}" in ${city.name}.`)
+    throw new Error(`Unknown line "${lineId}" in ${city.id}.`)
   }
   return line
 }
 
 function minStopsForMode(mode: GameMode, difficulty: Difficulty): number {
-  const base = difficulty === 'expert' ? 8 : resolveStopCount(Number.MAX_SAFE_INTEGER, difficulty)
+  if (difficulty === 'expert') {
+    return 1
+  }
+
+  const base = resolveStopCount(Number.MAX_SAFE_INTEGER, difficulty)
   if (mode === 'missing-stop') {
     return Math.min(base, 5)
   }
@@ -79,7 +83,7 @@ export function getRandomRoute(
     (candidate) => !lineId || candidate.line.id === lineId
   )
   if (routes.length === 0) {
-    throw new Error(`No compatible routes found in ${city.name}.`)
+    throw new Error(`No compatible routes found in ${city.id}.`)
   }
   return randomItem(routes)
 }
@@ -89,7 +93,7 @@ export function getRandomLineWithMinLength(city: City, minimumStops: number): Me
     line.routes.some((route) => route.stopIds.length >= minimumStops)
   )
   if (lines.length === 0) {
-    throw new Error(`No line in ${city.name} has at least ${minimumStops} stops.`)
+    throw new Error(`No line in ${city.id} has at least ${minimumStops} stops.`)
   }
   return randomItem(lines)
 }

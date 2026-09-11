@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getLine } from '../../data/cities'
+  import { t } from '../../i18n'
   import type { GameStats, GameStatus, WrongStopRound } from '../../types/game'
   import type { City } from '../../types/metro'
   import GameResult from '../../components/GameResult.svelte'
@@ -19,7 +20,7 @@
   let status: GameStatus = 'playing'
 
   $: line = getLine(city, round.lineId)
-  $: solution = `${round.intruder.name} no pertany a aquesta línia.`
+  $: solution = $t('wrongStop.solution', { station: round.intruder.name })
   $: if (round.id) {
     selectedId = null
     status = 'playing'
@@ -34,26 +35,35 @@
   }
 </script>
 
-<section class="screen game-screen" aria-labelledby="game-title">
-  <button class="text-button" type="button" onclick={onBack}>Enrere</button>
-  <div class="game-meta">
-    <span>{city.name}</span>
-    <MetroLineBadge {line} />
-  </div>
-  <h1 id="game-title">{round.prompt}</h1>
+<section class="screen game-screen intruder-screen" style={`--active-line: ${line.color}`} aria-labelledby="game-title">
+  <button class="text-button" type="button" onclick={onBack}>← {$t('common.back')}</button>
 
-  <div class="answer-grid vertical">
-    {#each round.stops as station}
-      <button
-        type="button"
-        class:correct={status !== 'playing' && station.id === round.intruder.id}
-        class:wrong={status !== 'playing' && selectedId === station.id && station.id !== round.intruder.id}
-        disabled={status !== 'playing'}
-        onclick={() => choose(station.id)}
-      >
-        {station.name}
-      </button>
-    {/each}
+  <div class="intruder-layout">
+    <aside class="intruder-copy">
+      <div class="game-meta">
+        <span>{$t(city.nameKey)}</span>
+        <MetroLineBadge {line} />
+      </div>
+      <p class="kicker">{$t('wrongStop.kicker')}</p>
+      <h1 id="game-title">{$t('wrongStop.title')}</h1>
+      <p>{$t('wrongStop.description')}</p>
+    </aside>
+
+    <div class="network-fragment" aria-label={$t('wrongStop.networkAria')}>
+      {#each round.stops as station, index (station.id)}
+        <button
+          type="button"
+          class="network-stop"
+          class:correct={status !== 'playing' && station.id === round.intruder.id}
+          class:wrong={status !== 'playing' && selectedId === station.id && station.id !== round.intruder.id}
+          disabled={status !== 'playing'}
+          onclick={() => choose(station.id)}
+        >
+          <span aria-hidden="true"></span>
+          <strong>{station.name}</strong>
+        </button>
+      {/each}
+    </div>
   </div>
 
   {#if status !== 'playing'}

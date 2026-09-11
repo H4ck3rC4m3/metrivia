@@ -29,7 +29,7 @@ export function createOrderStopsRound(
       cityId: city.id,
       lineId: resolved.line.id,
       routeId: resolved.route.id,
-      prompt: 'Ordena aquestes parades',
+      promptKey: 'orderStops.prompt',
       correctStopIds,
       shuffledStops: shuffledDifferent(selectedStops)
     }

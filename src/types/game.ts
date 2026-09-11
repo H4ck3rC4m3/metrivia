@@ -1,4 +1,6 @@
 import type { Station } from './metro'
+import type { Locale } from '../i18n/locales'
+import type { TranslationKey } from '../i18n/ca'
 
 export type GameMode = 'order-stops' | 'missing-stop' | 'wrong-stop'
 export type Difficulty = 'easy' | 'normal' | 'hard' | 'expert'
@@ -30,7 +32,7 @@ export interface RoundBase {
   cityId: string
   lineId: string
   routeId: string
-  prompt: string
+  promptKey: TranslationKey
 }
 
 export interface OrderStopsRound extends RoundBase {
@@ -65,4 +67,5 @@ export interface Preferences {
   cityId: string
   difficulty: Difficulty
   lineSelection: LineSelectionMode
+  locale?: Locale
 }

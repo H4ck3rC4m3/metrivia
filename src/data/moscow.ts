@@ -2,7 +2,7 @@ import type { City } from '../types/metro'
 
 export const moscow: City = {
   id: 'moscow',
-  name: 'Moscou',
+  nameKey: 'cities.moscow',
   countryCode: 'RU',
   stations: [
     { id: 'bulvar-rokossovskogo', name: 'Bulvar Rokossovskogo' },

@@ -1,6 +1,8 @@
+import type { TranslationKey } from '../i18n/ca'
+
 export interface City {
   id: string
-  name: string
+  nameKey: TranslationKey
   countryCode: string
   stations: Station[]
   lines: MetroLine[]

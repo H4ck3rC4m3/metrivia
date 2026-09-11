@@ -1,4 +1,5 @@
 import type { GameStats, Preferences, ThemeMode } from '../types/game'
+import { normalizeLocale } from '../i18n/locales'
 
 const preferencesKey = 'metrodle:preferences:v1'
 const statsKey = 'metrodle:stats:v1'
@@ -6,7 +7,7 @@ const themeKey = 'metrodle:theme:v1'
 
 const defaultPreferences: Preferences = {
   cityId: 'barcelona',
-  difficulty: 'normal',
+  difficulty: 'expert',
   lineSelection: 'random'
 }
 
@@ -45,11 +46,14 @@ function writeJson<T>(key: string, value: T): void {
 }
 
 export function loadPreferences(): Preferences {
-  return readJson(preferencesKey, defaultPreferences)
+  const preferences = readJson(preferencesKey, defaultPreferences)
+  const locale = normalizeLocale(preferences.locale)
+  return locale ? { ...preferences, locale } : preferences
 }
 
 export function savePreferences(preferences: Preferences): void {
-  writeJson(preferencesKey, preferences)
+  const existing = readJson<Preferences>(preferencesKey, defaultPreferences)
+  writeJson(preferencesKey, { ...existing, ...preferences, locale: preferences.locale ?? existing.locale })
 }
 
 export function loadStats(): GameStats {

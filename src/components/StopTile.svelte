@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Station } from '../types/metro'
+  import { t } from '../i18n'
 
   export let station: Station
   export let index = 0
@@ -27,7 +28,7 @@
       onKeyMove(index, 1)
     }
   }}
-  aria-label={`${station.name}, posició ${index + 1} de ${total}`}
+  aria-label={$t('orderStops.tileAria', { station: station.name, position: index + 1, total })}
 >
   <span class="handle" aria-hidden="true"></span>
   <span>{station.name}</span>

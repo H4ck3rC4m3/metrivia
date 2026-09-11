@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getLine, getStation } from '../../data/cities'
-  import { uiText } from '../../lib/text'
+  import { t } from '../../i18n'
   import type { City, Station } from '../../types/metro'
   import type { GameStatus, OrderStopsRound } from '../../types/game'
   import GameResult from '../../components/GameResult.svelte'
@@ -25,7 +25,9 @@
   let listElement: HTMLDivElement
 
   $: line = getLine(city, round.lineId)
-  $: solution = `Ordre correcte: ${round.correctStopIds.map((stopId) => getStation(city, stopId).name).join(' · ')}`
+  $: solution = $t('orderStops.solution', {
+    stations: round.correctStopIds.map((stopId) => getStation(city, stopId).name).join(' · ')
+  })
 
   $: if (round.id) {
     currentStops = round.shuffledStops
@@ -42,7 +44,11 @@
     const [moved] = nextStops.splice(fromIndex, 1)
     nextStops.splice(toIndex, 0, moved)
     currentStops = nextStops
-    liveMessage = `${moved.name}, posició ${toIndex + 1} de ${currentStops.length}`
+    liveMessage = $t('orderStops.moved', {
+      station: moved.name,
+      position: toIndex + 1,
+      total: currentStops.length
+    })
   }
 
   function handlePointerDown(event: PointerEvent, index: number): void {
@@ -85,48 +91,56 @@
   }
 </script>
 
-<section class="screen game-screen" aria-labelledby="game-title">
-  <button class="text-button" type="button" onclick={onBack}>{uiText.back}</button>
-  <div class="game-meta">
-    <span>{city.name}</span>
-    <MetroLineBadge {line} />
+<section class="screen game-screen order-screen" style={`--active-line: ${line.color}`} aria-labelledby="game-title">
+  <button class="text-button" type="button" onclick={onBack}>← {$t('common.back')}</button>
+  <div class="play-layout">
+    <aside class="play-context">
+      <div class="game-meta">
+        <span>{$t(city.nameKey)}</span>
+        <MetroLineBadge {line} />
+      </div>
+      <p class="kicker">{$t('orderStops.kicker')}</p>
+      <h1 id="game-title">{$t('orderStops.title')}</h1>
+      <p>{$t('orderStops.context', { count: currentStops.length })}</p>
+    </aside>
+
+    <div class="order-board">
+      <div
+        class="stop-list route-list"
+        role="group"
+        aria-label={$t('orderStops.reorderableAria')}
+        bind:this={listElement}
+        onpointermove={handlePointerMove}
+        onpointerup={handlePointerEnd}
+        onpointercancel={handlePointerEnd}
+      >
+        {#each currentStops as station, index (station.id)}
+          <StopTile
+            {station}
+            {index}
+            total={currentStops.length}
+            disabled={status !== 'playing'}
+            dragging={activeStopId === station.id}
+            onPointerDown={handlePointerDown}
+            onKeyMove={handleKeyMove}
+          />
+        {/each}
+      </div>
+
+      <p class="sr-only" aria-live="polite">{liveMessage}</p>
+
+      {#if status === 'playing'}
+        <button class="primary-action" type="button" onclick={checkAnswer}>{$t('common.check')} →</button>
+      {:else}
+        <GameResult
+          correct={status === 'correct'}
+          {solution}
+          {stats}
+          {onNewRound}
+          onSetup={onSetup}
+          onMode={onMode}
+        />
+      {/if}
+    </div>
   </div>
-  <h1 id="game-title">{round.prompt}</h1>
-
-  <div
-    class="stop-list"
-    role="group"
-    aria-label="Parades reordenables"
-    bind:this={listElement}
-    onpointermove={handlePointerMove}
-    onpointerup={handlePointerEnd}
-    onpointercancel={handlePointerEnd}
-  >
-    {#each currentStops as station, index (station.id)}
-      <StopTile
-        {station}
-        {index}
-        total={currentStops.length}
-        disabled={status !== 'playing'}
-        dragging={activeStopId === station.id}
-        onPointerDown={handlePointerDown}
-        onKeyMove={handleKeyMove}
-      />
-    {/each}
-  </div>
-
-  <p class="sr-only" aria-live="polite">{liveMessage}</p>
-
-  {#if status === 'playing'}
-    <button class="primary-action" type="button" onclick={checkAnswer}>{uiText.check}</button>
-  {:else}
-    <GameResult
-      correct={status === 'correct'}
-      {solution}
-      {stats}
-      {onNewRound}
-      onSetup={onSetup}
-      onMode={onMode}
-    />
-  {/if}
 </section>

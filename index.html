@@ -10,8 +10,26 @@
     <title>Metrodle</title>
     <script>
       try {
+        const supportedLocales = ['ca', 'en', 'es']
+        const normalizeLocale = (value) => {
+          if (!value) return null
+          const lower = value.toLowerCase()
+          if (supportedLocales.includes(lower)) return lower
+          const base = lower.split('-')[0]
+          return supportedLocales.includes(base) ? base : null
+        }
+        const params = new URLSearchParams(window.location.search)
+        const savedLocale = localStorage.getItem('metrodle:locale:v1')
+        const browserLocale = navigator.languages?.[0] || navigator.language
+        const locale =
+          normalizeLocale(params.get('lang')) ||
+          normalizeLocale(savedLocale) ||
+          normalizeLocale(browserLocale) ||
+          'ca'
         const savedTheme = localStorage.getItem('metrodle:theme:v1')
         const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.lang = locale
+        document.documentElement.dir = 'ltr'
         document.documentElement.dataset.theme =
           savedTheme === 'light' || savedTheme === 'dark'
             ? savedTheme

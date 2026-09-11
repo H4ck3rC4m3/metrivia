@@ -23,9 +23,13 @@ export function createMissingStopRound(
   for (let attempt = 0; attempt < 10; attempt += 1) {
     const resolved = getRandomRoute(city, 'missing-stop', difficulty, lineId)
     const routeStops = getRouteStations(city, resolved.route)
-    const desiredCount = Math.max(5, Math.min(resolveStopCount(routeStops.length, difficulty), 8))
+    const desiredCount =
+      difficulty === 'expert'
+        ? routeStops.length
+        : Math.min(routeStops.length, Math.max(5, Math.min(resolveStopCount(routeStops.length, difficulty), 8)))
     const segment = consecutiveSegment(routeStops, desiredCount)
-    const missingIndex = 1 + Math.floor(Math.random() * (segment.length - 2))
+    const missingIndex =
+      segment.length > 2 ? 1 + Math.floor(Math.random() * (segment.length - 2)) : Math.floor(Math.random() * segment.length)
     const answer = segment[missingIndex]
     const pool = distractorPool(city, segment, answer, difficulty === 'hard' || difficulty === 'expert')
     const distractors = sample(pool, Math.min(difficultyConfig[difficulty].optionCount - 1, pool.length))
@@ -42,7 +46,7 @@ export function createMissingStopRound(
       cityId: city.id,
       lineId: resolved.line.id,
       routeId: resolved.route.id,
-      prompt: 'Quina parada falta?',
+      promptKey: 'missingStop.prompt',
       sequence: segment.map((station, index) => (index === missingIndex ? null : station)),
       answer,
       options

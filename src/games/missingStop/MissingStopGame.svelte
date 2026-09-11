@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getLine } from '../../data/cities'
+  import { t } from '../../i18n'
   import type { GameStats, GameStatus, MissingStopRound } from '../../types/game'
   import type { City } from '../../types/metro'
   import GameResult from '../../components/GameResult.svelte'
@@ -19,7 +20,7 @@
   let status: GameStatus = 'playing'
 
   $: line = getLine(city, round.lineId)
-  $: solution = `La parada que faltava era ${round.answer.name}.`
+  $: solution = $t('missingStop.solution', { station: round.answer.name })
   $: if (round.id) {
     selectedId = null
     status = 'playing'
@@ -34,32 +35,42 @@
   }
 </script>
 
-<section class="screen game-screen" aria-labelledby="game-title">
-  <button class="text-button" type="button" onclick={onBack}>Enrere</button>
-  <div class="game-meta">
-    <span>{city.name}</span>
-    <MetroLineBadge {line} />
-  </div>
-  <h1 id="game-title">{round.prompt}</h1>
+<section class="screen game-screen missing-screen" style={`--active-line: ${line.color}`} aria-labelledby="game-title">
+  <button class="text-button" type="button" onclick={onBack}>← {$t('common.back')}</button>
 
-  <ol class="sequence-list">
-    {#each round.sequence as station}
-      <li class:missing={!station}>{station?.name ?? '???'}</li>
-    {/each}
-  </ol>
+  <div class="missing-layout">
+    <header class="missing-header">
+      <div class="game-meta">
+        <span>{$t(city.nameKey)}</span>
+        <MetroLineBadge {line} />
+      </div>
+      <p class="kicker">{$t('missingStop.kicker')}</p>
+      <h1 id="game-title">{$t('missingStop.title')}</h1>
+    </header>
 
-  <div class="answer-grid">
-    {#each round.options as option}
-      <button
-        type="button"
-        class:correct={status !== 'playing' && option.id === round.answer.id}
-        class:wrong={status !== 'playing' && selectedId === option.id && option.id !== round.answer.id}
-        disabled={status !== 'playing'}
-        onclick={() => choose(option.id)}
-      >
-        {option.name}
-      </button>
-    {/each}
+    <ol class="missing-route" aria-label={$t('missingStop.routeAria')}>
+      {#each round.sequence as station}
+        <li class:missing={!station}>
+          <span class="route-node" aria-hidden="true"></span>
+          <span>{station?.name ?? '?'}</span>
+        </li>
+      {/each}
+    </ol>
+
+    <div class="answer-column" aria-label={$t('missingStop.optionsAria')}>
+      {#each round.options as option, index}
+        <button
+          type="button"
+          class:correct={status !== 'playing' && option.id === round.answer.id}
+          class:wrong={status !== 'playing' && selectedId === option.id && option.id !== round.answer.id}
+          disabled={status !== 'playing'}
+          onclick={() => choose(option.id)}
+        >
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          {option.name}
+        </button>
+      {/each}
+    </div>
   </div>
 
   {#if status !== 'playing'}

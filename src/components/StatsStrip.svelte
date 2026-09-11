@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { uiText } from '../lib/text'
+  import { numberFormatter, t } from '../i18n'
   import type { GameStats } from '../types/game'
 
   export let stats: GameStats
 </script>
 
-<dl class="stats-strip" aria-label="Estadístiques locals">
+<dl class="stats-strip" aria-label={$t('stats.aria')}>
   <div>
-    <dt>{uiText.statsPlayed}</dt>
-    <dd>{stats.played}</dd>
+    <dt>{$t('stats.played')}</dt>
+    <dd>{$numberFormatter(stats.played)}</dd>
   </div>
   <div>
-    <dt>{uiText.statsCorrect}</dt>
-    <dd>{stats.correct}</dd>
+    <dt>{$t('stats.correct')}</dt>
+    <dd>{$numberFormatter(stats.correct)}</dd>
   </div>
   <div>
-    <dt>{uiText.bestStreak}</dt>
-    <dd>{stats.bestStreak}</dd>
+    <dt>{$t('stats.bestStreak')}</dt>
+    <dd>{$numberFormatter(stats.bestStreak)}</dd>
   </div>
 </dl>

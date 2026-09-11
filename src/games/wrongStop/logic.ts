@@ -13,7 +13,10 @@ export function createWrongStopRound(
   for (let attempt = 0; attempt < 10; attempt += 1) {
     const resolved = getRandomRoute(city, 'wrong-stop', difficulty, lineId)
     const routeStops = getRouteStations(city, resolved.route)
-    const stopCount = Math.max(4, Math.min(resolveStopCount(routeStops.length, difficulty), 8))
+    const stopCount =
+      difficulty === 'expert'
+        ? routeStops.length
+        : Math.min(routeStops.length, Math.max(4, Math.min(resolveStopCount(routeStops.length, difficulty), 8)))
     const segment = consecutiveSegment(routeStops, stopCount)
     const lineStopIds = new Set(resolved.line.routes.flatMap((route) => route.stopIds))
     const segmentIds = new Set(segment.map((station) => station.id))
@@ -39,7 +42,7 @@ export function createWrongStopRound(
       cityId: city.id,
       lineId: resolved.line.id,
       routeId: resolved.route.id,
-      prompt: 'Troba la parada intrusa',
+      promptKey: 'wrongStop.prompt',
       stops,
       intruder
     }
