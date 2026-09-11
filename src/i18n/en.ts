@@ -17,6 +17,7 @@ export const en = {
   'cities.granada': 'Granada',
   'cities.malaga': 'Málaga',
   'cities.moscow': 'Moscow',
+  'cities.palma': 'Palma',
   'cities.seville': 'Seville',
   'home.kicker': 'Network game',
   'home.title': 'Do you know the network\nas well as you think?',

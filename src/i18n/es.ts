@@ -17,6 +17,7 @@ export const es = {
   'cities.granada': 'Granada',
   'cities.malaga': 'Málaga',
   'cities.moscow': 'Moscú',
+  'cities.palma': 'Palma',
   'cities.seville': 'Sevilla',
   'home.kicker': 'Juego de red',
   'home.title': '¿Conoces la red\ntan bien como crees?',

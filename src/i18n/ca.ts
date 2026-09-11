@@ -15,6 +15,7 @@ export const ca = {
   'cities.granada': 'Granada',
   'cities.malaga': 'Màlaga',
   'cities.moscow': 'Moscou',
+  'cities.palma': 'Palma',
   'cities.seville': 'Sevilla',
   'home.kicker': 'Joc de xarxa',
   'home.title': 'Coneixes la xarxa\ntan bé com creus?',
