@@ -18,6 +18,10 @@
   export let onStart: () => void
   export let onBack: () => void
 
+  const difficulties: Difficulty[] = ['easy', 'normal', 'hard', 'expert']
+  $: availableDifficulties = difficulties.filter(
+    (candidateDifficulty) => getCompatibleRoutes(city, mode, candidateDifficulty).length > 0
+  )
   $: compatibleLines = Array.from(
     new Map(getCompatibleRoutes(city, mode, difficulty).map((route) => [route.line.id, route.line])).values()
   )
@@ -28,7 +32,9 @@
     'missing-stop': 'mode.missingStop.title',
     'wrong-stop': 'mode.wrongStop.title'
   }
-  $: canStart = lineSelection === 'random' || Boolean(lineId && compatibleLineIds.includes(lineId))
+  $: canStart =
+    availableDifficulties.includes(difficulty) &&
+    (lineSelection === 'random' || Boolean(lineId && compatibleLineIds.includes(lineId)))
 </script>
 
 <section class="screen setup-screen" aria-labelledby="setup-title">
@@ -57,7 +63,11 @@
           <p class="step-label">{$t('setup.difficulty')}</p>
           <h2>{$t('setup.difficultyPrompt')}</h2>
         </div>
-        <DifficultySelector value={difficulty} onChange={onDifficultyChange} />
+        <DifficultySelector
+          value={difficulty}
+          {availableDifficulties}
+          onChange={onDifficultyChange}
+        />
       </section>
 
       <section class="setup-step">

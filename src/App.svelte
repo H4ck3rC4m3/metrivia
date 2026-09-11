@@ -4,7 +4,7 @@
   import CitySelector from './components/CitySelector.svelte'
   import GameSetup from './components/GameSetup.svelte'
   import ModeSelector from './components/ModeSelector.svelte'
-  import { cities, getCity, validateAllCities } from './data/cities'
+  import { cities, getCity, getCompatibleRoutes, validateAllCities } from './data/cities'
   import MissingStopGame from './games/missingStop/MissingStopGame.svelte'
   import OrderStopsGame from './games/orderStops/OrderStopsGame.svelte'
   import { createRound } from './games/shared/createRound'
@@ -30,6 +30,7 @@
   } from './types/game'
 
   type Screen = 'city' | 'mode' | 'setup' | 'game'
+  const difficulties: Difficulty[] = ['easy', 'normal', 'hard', 'expert']
 
   let screen: Screen = 'city'
   let preferences: Preferences = {
@@ -89,9 +90,18 @@
   }
 
   function selectMode(mode: GameMode): void {
+    if (mode === 'wrong-stop' && selectedCity.lines.length < 2) {
+      generationError = $t('mode.unavailableSingleLine')
+      return
+    }
+    if (!difficulties.some((difficulty) => getCompatibleRoutes(selectedCity, mode, difficulty).length > 0)) {
+      generationError = $t('mode.unavailableNoRounds')
+      return
+    }
     selectedMode = mode
     selectedLineId = undefined
     round = null
+    generationError = ''
     screen = 'setup'
   }
 
@@ -106,6 +116,14 @@
 
   function startRound(): void {
     generationError = ''
+    if (selectedMode === 'wrong-stop' && selectedCity.lines.length < 2) {
+      generationError = $t('mode.unavailableSingleLine')
+      return
+    }
+    if (getCompatibleRoutes(selectedCity, selectedMode, preferences.difficulty).length === 0) {
+      generationError = $t('setup.unavailableDifficulty')
+      return
+    }
     try {
       const lineId = preferences.lineSelection === 'manual' ? selectedLineId : undefined
       round = createRound(selectedCity, selectedMode, preferences.difficulty, lineId, round?.id)

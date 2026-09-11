@@ -2,6 +2,7 @@
   import type { GameMode } from '../types/game'
   import type { City } from '../types/metro'
   import { t } from '../i18n'
+  import { getCompatibleRoutes } from '../data/cities'
   import CityName from './CityName.svelte'
 
   const gameModes = [
@@ -25,6 +26,22 @@
   export let city: City
   export let onSelect: (mode: GameMode) => void
   export let onBack: () => void
+
+  const difficulties = ['easy', 'normal', 'hard', 'expert'] as const
+
+  function isModeAvailable(mode: GameMode): boolean {
+    return (
+      (mode !== 'wrong-stop' || city.lines.length > 1) &&
+      difficulties.some((difficulty) => getCompatibleRoutes(city, mode, difficulty).length > 0)
+    )
+  }
+
+  function unavailableReason(mode: GameMode): string {
+    if (mode === 'wrong-stop' && city.lines.length < 2) {
+      return $t('mode.unavailableSingleLine')
+    }
+    return $t('mode.unavailableNoRounds')
+  }
 </script>
 
 <section class="screen" aria-labelledby="mode-title">
@@ -37,11 +54,22 @@
 
     <div class="mode-menu">
       {#each gameModes as mode, index}
-        <button class={`mode-row mode-${mode.id}`} type="button" onclick={() => onSelect(mode.id as GameMode)}>
+        {@const gameMode = mode.id as GameMode}
+        {@const available = isModeAvailable(gameMode)}
+        <button
+          class={`mode-row mode-${mode.id}`}
+          type="button"
+          disabled={!available}
+          title={available ? undefined : unavailableReason(gameMode)}
+          onclick={() => onSelect(gameMode)}
+        >
           <span class="mode-number">{String(index + 1).padStart(2, '0')}</span>
           <span class="mode-copy">
             <strong>{$t(mode.titleKey)}</strong>
             <small>{$t(mode.descriptionKey)}</small>
+            {#if !available}
+              <small class="mode-unavailable">{unavailableReason(gameMode)}</small>
+            {/if}
           </span>
           <span class="mode-diagram" aria-hidden="true">
             {#if mode.id === 'order-stops'}

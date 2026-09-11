@@ -4,14 +4,11 @@ import type { City, Station } from '../../types/metro'
 import type { Difficulty, MissingStopRound } from '../../types/game'
 import { difficultyConfig, resolveStopCount } from '../shared/difficulty'
 
-function distractorPool(city: City, segment: Station[], answer: Station, hard: boolean): Station[] {
-  const segmentIds = new Set(segment.map((station) => station.id))
-  const basePool = city.stations.filter(
-    (station) => station.id !== answer.id && (!hard || !segmentIds.has(station.id))
+function distractorPool(city: City, visibleStations: Station[], answer: Station): Station[] {
+  const visibleStationIds = new Set(visibleStations.map((station) => station.id))
+  return city.stations.filter(
+    (station) => station.id !== answer.id && !visibleStationIds.has(station.id)
   )
-  return basePool.length >= 3
-    ? basePool
-    : city.stations.filter((station) => station.id !== answer.id)
 }
 
 export function createMissingStopRound(
@@ -31,8 +28,15 @@ export function createMissingStopRound(
     const missingIndex =
       segment.length > 2 ? 1 + Math.floor(Math.random() * (segment.length - 2)) : Math.floor(Math.random() * segment.length)
     const answer = segment[missingIndex]
-    const pool = distractorPool(city, segment, answer, difficulty === 'hard' || difficulty === 'expert')
-    const distractors = sample(pool, Math.min(difficultyConfig[difficulty].optionCount - 1, pool.length))
+    const visibleStations = segment.filter((_, index) => index !== missingIndex)
+    const requiredDistractors = difficultyConfig[difficulty].optionCount - 1
+    const pool = distractorPool(city, visibleStations, answer)
+
+    if (pool.length < requiredDistractors) {
+      continue
+    }
+
+    const distractors = sample(pool, requiredDistractors)
     const options = shuffle([answer, ...distractors])
     const id = `missing:${city.id}:${resolved.line.id}:${resolved.route.id}:${segment.map((stop) => stop.id).join('-')}:${answer.id}`
 

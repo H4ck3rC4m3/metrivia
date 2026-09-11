@@ -64,15 +64,55 @@ function minStopsForMode(mode: GameMode, difficulty: Difficulty): number {
   return base
 }
 
+function stopCountForMode(totalStops: number, mode: GameMode, difficulty: Difficulty): number {
+  if (mode === 'missing-stop') {
+    return difficulty === 'expert'
+      ? totalStops
+      : Math.min(totalStops, Math.max(5, Math.min(resolveStopCount(totalStops, difficulty), 8)))
+  }
+  if (mode === 'wrong-stop') {
+    return difficulty === 'expert'
+      ? totalStops
+      : Math.min(totalStops, Math.max(4, Math.min(resolveStopCount(totalStops, difficulty), 8)))
+  }
+  return difficulty === 'expert' ? totalStops : Math.max(2, resolveStopCount(totalStops, difficulty))
+}
+
+export function isRouteCompatible(
+  city: City,
+  route: MetroRoute,
+  mode: GameMode,
+  difficulty: Difficulty
+): boolean {
+  if (route.stopIds.length < minStopsForMode(mode, difficulty)) {
+    return false
+  }
+
+  if (mode === 'missing-stop') {
+    const stopCount = stopCountForMode(route.stopIds.length, mode, difficulty)
+    return city.stations.length - stopCount >= 3
+  }
+
+  if (mode === 'wrong-stop') {
+    const line = city.lines.find((candidate) =>
+      candidate.routes.some((candidateRoute) => candidateRoute.id === route.id)
+    )
+    if (!line) return false
+    const lineStopIds = new Set(line.routes.flatMap((lineRoute) => lineRoute.stopIds))
+    return city.stations.some((station) => !lineStopIds.has(station.id))
+  }
+
+  return true
+}
+
 export function getCompatibleRoutes(
   city: City,
   mode: GameMode,
   difficulty: Difficulty
 ): ResolvedRoute[] {
-  const minimumStops = minStopsForMode(mode, difficulty)
   return city.lines.flatMap((line) =>
     line.routes
-      .filter((route) => route.stopIds.length >= minimumStops)
+      .filter((route) => isRouteCompatible(city, route, mode, difficulty))
       .map((route) => ({ city, line, route }))
   )
 }
