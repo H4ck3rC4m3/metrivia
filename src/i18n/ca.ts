@@ -14,6 +14,7 @@ export const ca = {
   'cities.barcelona': 'Barcelona',
   'cities.bilbao': 'Bilbao',
   'cities.granada': 'Granada',
+  'cities.madrid': 'Madrid',
   'cities.malaga': 'Màlaga',
   'cities.moscow': 'Moscou',
   'cities.palma': 'Palma',

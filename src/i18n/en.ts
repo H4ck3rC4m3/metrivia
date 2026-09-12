@@ -16,6 +16,7 @@ export const en = {
   'cities.barcelona': 'Barcelona',
   'cities.bilbao': 'Bilbao',
   'cities.granada': 'Granada',
+  'cities.madrid': 'Madrid',
   'cities.malaga': 'Málaga',
   'cities.moscow': 'Moscow',
   'cities.palma': 'Palma',
