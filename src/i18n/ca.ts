@@ -12,6 +12,7 @@ export const ca = {
   'common.linesDemo': '{count} línies',
   'common.stops': { one: '{count} estació', other: '{count} estacions' },
   'cities.barcelona': 'Barcelona',
+  'cities.bilbao': 'Bilbao',
   'cities.granada': 'Granada',
   'cities.malaga': 'Màlaga',
   'cities.moscow': 'Moscou',
